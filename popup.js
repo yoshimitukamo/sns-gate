@@ -7,6 +7,7 @@ const REASON_SHORT = {
   post:     '投稿',
   social:   '近況確認',
   break:    '休憩',
+  habit:    '😶 惰性',
 };
 
 // ── 日付ユーティリティ ──
@@ -108,16 +109,18 @@ function render(period) {
       const s = siteStats[site];
       const maxReasonCount = Math.max(...Object.values(s.reasons), 1);
 
+      const habitCount = s.reasons['habit'] || 0;
       const reasonsHtml = Object.entries(s.reasons)
         .sort((a, b) => b[1] - a[1])
         .map(([key, cnt]) => {
           const pct = Math.round((cnt / maxReasonCount) * 100);
           const label = REASON_SHORT[key] || key;
+          const isHabit = key === 'habit';
           return `
-            <div class="reason-row">
+            <div class="reason-row${isHabit ? ' reason-habit' : ''}">
               <span class="reason-label">${label}</span>
               <div class="reason-bar-wrap">
-                <div class="reason-bar-fill" style="width:${pct}%"></div>
+                <div class="reason-bar-fill${isHabit ? ' habit-fill' : ''}" style="width:${pct}%"></div>
               </div>
               <span class="reason-count">${cnt}</span>
             </div>`;

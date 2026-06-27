@@ -71,6 +71,15 @@
       background: rgba(94,92,230,0.1);
     }
 
+    /* 惰性ボタン — 選択すると琥珀色で「痛さ」を演出 */
+    .opt-honest { color: #4a4a4e; border-top: 1px solid rgba(255,255,255,0.04); }
+    .opt-honest:hover { color: #8e8e93; }
+    .opt-honest.sel {
+      color: #fbbf24;
+      border-left-color: #f59e0b;
+      background: rgba(245,158,11,0.08);
+    }
+
     .foot {
       padding: 16px 24px;
       display: flex;
@@ -124,6 +133,7 @@
       <button class="opt" data-key="post">投稿するコンテンツがある</button>
       <button class="opt" data-key="social">友人・家族の近況を確認する</button>
       <button class="opt" data-key="break">意識的な休憩として開く</button>
+      <button class="opt opt-honest" data-key="habit">惰性・何となく（正直に言うと）</button>
     </div>
 
     <div class="foot">
