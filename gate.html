@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>SNS Gate</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0d0d0d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .card {
+      background: #1c1c1e;
+      border-radius: 16px;
+      width: 400px;
+      max-width: 92vw;
+      overflow: hidden;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.5);
+    }
+
+    .head {
+      padding: 24px 24px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .site-label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #636366;
+      margin-bottom: 8px;
+    }
+    .title {
+      display: block;
+      font-size: 20px;
+      font-weight: 600;
+      color: #f2f2f7;
+      letter-spacing: -0.01em;
+    }
+
+    .options { display: flex; flex-direction: column; }
+
+    .opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      border-left: 3px solid transparent;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 15px 24px 15px 21px;
+      font-size: 15px;
+      color: #8e8e93;
+      cursor: pointer;
+      transition: background 0.12s, color 0.12s, border-left-color 0.12s;
+      font-family: inherit;
+      line-height: 1.4;
+    }
+    .opt:last-child { border-bottom: none; }
+    .opt:hover { background: rgba(255,255,255,0.04); color: #c7c7cc; }
+    .opt.sel {
+      color: #f2f2f7;
+      border-left-color: #5e5ce6;
+      background: rgba(94,92,230,0.1);
+    }
+
+    .foot {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .go {
+      padding: 10px 22px;
+      background: #5e5ce6;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      opacity: 0;
+      transform: translateY(3px);
+      transition: opacity 0.15s, transform 0.15s, background 0.12s;
+      pointer-events: none;
+    }
+    .go.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .go:hover { background: #4845c8; }
+    .go:disabled { opacity: 0.5; cursor: default; }
+
+    .back {
+      font-size: 13px;
+      color: #48484a;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      padding: 4px 0;
+      transition: color 0.12s;
+    }
+    .back:hover { color: #8e8e93; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="head">
+      <span class="site-label" id="site-label"></span>
+      <span class="title">なぜ開きますか？</span>
+    </div>
+
+    <div class="options" id="options">
+      <button class="opt" data-key="dm">DM・返信を確認する</button>
+      <button class="opt" data-key="research">仕事のリサーチ・情報収集</button>
+      <button class="opt" data-key="post">投稿するコンテンツがある</button>
+      <button class="opt" data-key="social">友人・家族の近況を確認する</button>
+      <button class="opt" data-key="break">意識的な休憩として開く</button>
+    </div>
+
+    <div class="foot">
+      <button class="go" id="go">この理由で開く</button>
+      <button class="back" id="back">やっぱり開かない</button>
+    </div>
+  </div>
+
+  <script src="gate.js"></script>
+</body>
+</html>

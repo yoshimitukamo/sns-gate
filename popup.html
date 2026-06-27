@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0d0d0d;
+      --surface: #141414;
+      --border:  #1e1e1e;
+      --text:    #f5f4f2;
+      --muted:   #484848;
+      --dim:     #2c2c2c;
+      --accent:  #818cf8;
+      --bar:     #2e3a5c;
+      --bar-hi:  #818cf8;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      width: 320px;
+      min-height: 120px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px 0;
+    }
+    .logo {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .date-label {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex;
+      gap: 0;
+      padding: 10px 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      padding: 6px 12px 8px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.12s;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+    .tab:first-child { padding-left: 0; }
+    .tab.active {
+      color: var(--text);
+      border-bottom-color: var(--accent);
+    }
+    .tab:hover:not(.active) { color: #888; }
+
+    /* ── Content ── */
+    .content {
+      padding: 0 16px 16px;
+    }
+
+    /* ── Site block ── */
+    .site-block {
+      padding: 14px 0 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .site-block:last-child { border-bottom: none; }
+
+    .site-name {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .metrics {
+      display: flex;
+      gap: 28px;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+    .metric {}
+    .metric-number {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .metric-label {
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .metric-number.dim { color: var(--dim); font-size: 22px; }
+
+    /* ── Reason bars ── */
+    .reasons {}
+    .reason-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .reason-row:last-child { margin-bottom: 0; }
+    .reason-label {
+      font-size: 10px;
+      color: var(--muted);
+      width: 68px;
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .reason-bar-wrap {
+      flex: 1;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .reason-bar-fill {
+      height: 100%;
+      background: var(--bar-hi);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+    .reason-count {
+      font-size: 10px;
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+      width: 18px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ── Empty ── */
+    .empty {
+      padding: 28px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .empty-icon { font-size: 22px; display: block; margin-bottom: 8px; }
+
+    /* ── Summary ── */
+    .summary {
+      border-top: 1px solid var(--border);
+      padding: 10px 16px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .summary-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .summary-value {
+      font-size: 11px;
+      font-variant-numeric: tabular-nums;
+      color: var(--text);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span class="logo">SNS Gate</span>
+    <span class="date-label" id="date-label"></span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-period="today">今日</button>
+    <button class="tab" data-period="week">今週</button>
+    <button class="tab" data-period="month">今月</button>
+  </div>
+
+  <div class="content" id="content">
+    <div class="empty">
+      <span class="empty-icon">🛡</span>
+      読み込み中…
+    </div>
+  </div>
+
+  <div class="summary" id="summary" style="display:none">
+    <span class="summary-label">合計</span>
+    <span class="summary-value" id="summary-value"></span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

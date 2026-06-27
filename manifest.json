@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "SNS Gate",
+  "version": "0.3.0",
+  "description": "惰性・無意識でSNSを開くのを防ぐ「理由選択ゲート」",
+  "permissions": [
+    "webNavigation",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://x.com/*",
+    "*://*.x.com/*",
+    "*://twitter.com/*",
+    "*://*.twitter.com/*",
+    "*://facebook.com/*",
+    "*://*.facebook.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SNS Gate"
+  }
+}
