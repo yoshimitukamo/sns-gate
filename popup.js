@@ -7,6 +7,7 @@ const REASON_SHORT = {
   post:     '投稿',
   social:   '近況確認',
   break:    '休憩',
+  ai_wait:  '🤖 AI待ち',
   habit:    '😶 惰性',
 };
 
